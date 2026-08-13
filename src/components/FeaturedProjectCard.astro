@@ -1,4 +1,10 @@
 ---
+/**
+ * Editorial Case Study Preview —— 首页重点项目的文章式摘要卡。
+ * 以文字、流程、结构化信息为主体；抽象视觉降级为右上角小型装饰图（≤220px）。
+ * 结构顺序（移动端单列 = DOM 顺序）：
+ *   PROJECT / STATUS → TITLE → SUMMARY → PROCESS → META → TAGS → CTA
+ */
 import { statusLabels, statusTone, type Project } from '../data/projects';
 import { BASE_URL } from '../lib/base';
 import ProjectCover from './ProjectCover.astro';
@@ -9,145 +15,309 @@ interface Props {
 }
 
 const { project, index } = Astro.props;
+const title = project.previewTitle ?? project.title;
+const titleEn = project.previewTitleEn ?? project.titleEn;
+const summary = project.previewSummary ?? project.summary;
 ---
 
-<article class="fcard card card--hover">
-  <a class="fcard-link" href={`${BASE_URL}projects/${project.slug}`} aria-label={`查看案例：${project.title}`}>
-    <div class="fcard-cover">
-      <ProjectCover variant={project.cover} />
-      <span class="fcard-index" aria-hidden="true">{index}</span>
+<article class="fpcard card card--hover">
+  <a class="fpcard-link" href={`${BASE_URL}projects/${project.slug}`} aria-label={`查看案例：${project.title}`}>
+    <header class="fpcard-head">
+      <span class="fpcard-index">{index}</span>
       {project.status && (
-        <span class="fcard-status">
+        <span class="fpcard-status">
           <span class={`badge badge--${statusTone[project.status]}`}>{statusLabels[project.status]}</span>
         </span>
       )}
-    </div>
+    </header>
 
-    <div class="fcard-body">
-      <p class="fcard-role">{project.role}</p>
-      <h3 class="fcard-title">
-        {project.title}
-        {project.titleEn && <span class="fcard-en">{project.titleEn}</span>}
-      </h3>
-      <p class="fcard-summary">{project.summary}</p>
-      <div class="fcard-tags">
-        {project.tags.slice(0, 4).map((t) => (
-          <span class="chip">{t}</span>
-        ))}
+    <div class="fpcard-main">
+      <div class="fpcard-copy">
+        <h3 class="fpcard-title">
+          {title}
+          {titleEn && <span class="fpcard-en">{titleEn}</span>}
+        </h3>
+        <p class="fpcard-summary">{summary}</p>
+
+        {
+          project.previewProcess && (
+            <ol class="fpcard-process">
+              {project.previewProcess.map((step) => (
+                <li>{step}</li>
+              ))}
+            </ol>
+          )
+        }
+
+        {
+          project.previewMeta && (
+            <dl class="fpcard-meta">
+              {project.previewMeta.map((row) => (
+                <div class="fpcard-meta-item">
+                  <dt>{row.label}</dt>
+                  <dd>{row.value}</dd>
+                </div>
+              ))}
+            </dl>
+          )
+        }
+
+        <div class="fpcard-tags">
+          {project.tags.slice(0, 4).map((t) => (
+            <span class="chip">{t}</span>
+          ))}
+        </div>
+
+        <span class="fpcard-more">
+          查看完整案例 <span class="arrow" aria-hidden="true">→</span>
+        </span>
       </div>
-      <span class="fcard-more">
-        查看案例 <span class="arrow" aria-hidden="true">→</span>
-      </span>
+
+      <aside class="fpcard-visual" aria-hidden="true">
+        {
+          project.previewDiagram === 'mart-concept' ? (
+            <svg class="fpcard-concept" viewBox="0 0 220 150" fill="none" role="presentation">
+              <rect x="60" y="8" width="100" height="24" rx="7" stroke="rgba(255,255,255,.22)" />
+              <text x="110" y="24" text-anchor="middle" class="fpcard-concept-label">KNOWLEDGE</text>
+              <path d="M110 32v14" stroke="var(--accent-line)" stroke-dasharray="2 3" />
+              <rect x="8" y="72" width="58" height="24" rx="7" stroke="rgba(255,255,255,.22)" />
+              <text x="37" y="87.5" text-anchor="middle" class="fpcard-concept-label">HUMAN</text>
+              <rect x="80" y="60" width="60" height="34" rx="9" stroke="var(--accent)" />
+              <text x="110" y="81" text-anchor="middle" class="fpcard-concept-label fpcard-concept-label--core">MART</text>
+              <rect x="154" y="72" width="58" height="24" rx="7" stroke="rgba(255,255,255,.22)" />
+              <text x="183" y="87.5" text-anchor="middle" class="fpcard-concept-label">AI</text>
+              <path d="M66 84h14" stroke="var(--accent-line)" />
+              <path d="M140 84h14" stroke="var(--accent-line)" />
+              <path d="M110 94v12" stroke="var(--accent-line)" stroke-dasharray="2 3" />
+              <rect x="60" y="106" width="100" height="24" rx="7" stroke="rgba(255,255,255,.22)" />
+              <text x="110" y="122" text-anchor="middle" class="fpcard-concept-label">WORKFLOW</text>
+            </svg>
+          ) : (
+            <ProjectCover variant={project.cover} mini />
+          )
+        }
+      </aside>
     </div>
   </a>
 </article>
 
 <style>
-  .fcard-link {
-    display: grid;
-    grid-template-columns: 44% 1fr;
-    gap: 0;
-    color: inherit;
-    height: 100%;
-  }
-
-  .fcard-link:hover {
+  .fpcard-link {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding: 28px 32px 26px;
     color: inherit;
   }
 
-  .fcard-cover {
-    position: relative;
-    padding: 24px 0 24px 24px;
+  .fpcard-link:hover {
+    color: inherit;
   }
 
-  .fcard-cover :global(.cover) {
-    height: 100%;
+  .fpcard-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
   }
 
-  .fcard-index {
-    position: absolute;
-    top: 34px;
-    left: 40px;
+  .fpcard-index {
     font-family: var(--font-mono);
-    font-size: 13px;
-    letter-spacing: 0.2em;
-    color: rgba(232, 236, 241, 0.85);
-    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+    font-size: var(--fs-tiny);
+    letter-spacing: 0.18em;
+    color: var(--text-3);
   }
 
-  .fcard-status {
-    position: absolute;
-    top: 32px;
-    right: 16px;
+  .fpcard-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(150px, 200px);
+    gap: 32px;
+    align-items: start;
+    min-width: 0;
   }
 
-  .fcard-body {
+  .fpcard-copy {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
-    padding: 32px 32px 28px;
+    gap: 14px;
+    min-width: 0;
   }
 
-  .fcard-role {
-    font-size: var(--fs-tiny);
-    letter-spacing: 0.08em;
-    color: var(--accent);
-    text-transform: uppercase;
-  }
-
-  .fcard-title {
+  .fpcard-title {
     font-size: clamp(1.35rem, 1.1rem + 1vw, 1.7rem);
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
+    min-width: 0;
   }
 
-  .fcard-en {
+  .fpcard-en {
     font-size: 14px;
     font-weight: 400;
     color: var(--text-3);
     letter-spacing: 0.02em;
   }
 
-  .fcard-summary {
+  .fpcard-summary {
     font-size: 15px;
+    line-height: 1.8;
     color: var(--text-2);
+    max-width: 62ch;
   }
 
-  .fcard-tags {
+  /* 流程：横向排布 + 箭头分隔，允许换行 */
+  .fpcard-process {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 8px;
+    margin-top: 2px;
+  }
+
+  .fpcard-process li {
+    font-size: var(--fs-small);
+    color: var(--text);
+    white-space: normal;
+  }
+
+  .fpcard-process li + li::before {
+    content: '→';
+    margin: 0 10px;
+    color: var(--accent);
+    opacity: 0.65;
+  }
+
+  /* 结构化信息行：ROLE / FOCUS / DELIVERABLES / CONCEPT / YEAR / STATUS */
+  .fpcard-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 14px 28px;
+    width: 100%;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    min-width: 0;
+  }
+
+  .fpcard-meta-item {
+    min-width: 0;
+  }
+
+  .fpcard-meta dt {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 6px;
+  }
+
+  .fpcard-meta dd {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-2);
+    overflow-wrap: break-word;
+  }
+
+  .fpcard-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: 4px;
+    margin-top: 2px;
   }
 
-  .fcard-more {
-    margin-top: auto;
-    padding-top: 12px;
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--accent);
+  .fpcard-more {
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    margin-top: 4px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--accent);
   }
 
-  .fcard-more .arrow {
-    transition: transform var(--dur) var(--ease);
+  .fpcard-more .arrow {
+    transition: transform var(--dur-fast) ease;
   }
 
-  .fcard:hover .fcard-more .arrow {
+  .fpcard:hover .fpcard-more .arrow {
     transform: translateX(4px);
   }
 
-  @media (max-width: 860px) {
-    .fcard-link {
-      grid-template-columns: 1fr;
+  /* 小型辅助视觉：右上角装饰，低透明度，尺寸封顶 */
+  .fpcard-visual {
+    justify-self: end;
+    width: 100%;
+    max-width: 200px;
+    min-width: 0;
+    opacity: 0.55;
+  }
+
+  .fpcard-visual :global(.cover) {
+    max-width: 200px;
+  }
+
+  .fpcard-concept {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+  }
+
+  .fpcard-concept-label {
+    fill: var(--text-2);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+
+  .fpcard-concept-label--core {
+    fill: var(--accent);
+    font-size: 11px;
+  }
+
+  /* Tablet：信息区自适应，视觉缩小，禁止横向滚动 */
+  @media (max-width: 1024px) {
+    .fpcard-main {
+      grid-template-columns: minmax(0, 1fr) 150px;
+      gap: 24px;
     }
 
-    .fcard-cover {
-      padding: 20px 20px 0;
+    .fpcard-visual {
+      max-width: 150px;
+    }
+
+    .fpcard-visual :global(.cover) {
+      max-width: 150px;
+    }
+
+    .fpcard-concept {
+      max-width: 150px;
+    }
+  }
+
+  /* Mobile：单列，小型装饰图隐藏 */
+  @media (max-width: 768px) {
+    .fpcard-link {
+      padding: 22px 20px 20px;
+    }
+
+    .fpcard-main {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
+
+    .fpcard-visual {
+      display: none;
+    }
+
+    .fpcard-meta {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 14px 20px;
     }
   }
 </style>

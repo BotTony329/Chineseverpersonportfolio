@@ -70,7 +70,7 @@ const jsonLd = [
       <div class="featured-grid">
         {
           featured.map((p, i) => (
-            <div class:list={['reveal', { 'featured-wide': i === 2 }]} style={i > 0 ? `--rd:${i * 0.08}s` : undefined}>
+            <div class="reveal" style={i > 0 ? `--rd:${i * 0.06}s` : undefined}>
               <FeaturedProjectCard project={p} index={`PROJECT ${String(i + 1).padStart(2, '0')}`} />
             </div>
           ))
@@ -212,25 +212,16 @@ const jsonLd = [
     white-space: nowrap;
   }
 
+  /* 重点项目：每张 Editorial Preview 卡占满容器宽度，纵向堆叠 */
   .featured-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 24px;
-  }
-
-  .featured-wide {
-    grid-column: 1 / -1;
   }
 
   .grid-3 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
-  }
-
-  @media (max-width: 1024px) {
-    .featured-grid {
-      grid-template-columns: 1fr;
-    }
   }
 </style>

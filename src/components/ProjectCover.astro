@@ -4,9 +4,11 @@ type Variant = 'flow' | 'grid' | 'orbit' | 'nodes';
 
 interface Props {
   variant: Variant;
+  /** 迷你模式：首页 Featured 卡片的小型辅助视觉（默认 full，案例详情页不受影响） */
+  mini?: boolean;
 }
 
-const { variant } = Astro.props;
+const { variant, mini = false } = Astro.props;
 const gridDots = Array.from({ length: 10 * 6 }, (_, i) => ({
   x: 20 + (i % 10) * 40,
   y: 25 + Math.floor(i / 10) * 40,
@@ -19,7 +21,7 @@ const nodes = [
 const nodeLinks = [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 0], [1, 5]];
 ---
 
-<div class={`cover cover--${variant}`} aria-hidden="true">
+<div class:list={['cover', `cover--${variant}`, { 'cover--mini': mini }]} aria-hidden="true">
   {
     variant === 'flow' && (
       <svg viewBox="0 0 400 250" fill="none">
@@ -88,6 +90,15 @@ const nodeLinks = [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 0], [1, 5]];
       radial-gradient(420px 220px at 78% 20%, rgba(59, 130, 246, 0.07), transparent 65%),
       linear-gradient(160deg, var(--surface-2), var(--surface));
     border: 1px solid var(--border);
+  }
+
+  /* 迷你模式：小型辅助视觉，尺寸封顶，随容器缩放 */
+  .cover--mini {
+    width: 100%;
+    max-width: 220px;
+    background:
+      radial-gradient(180px 100px at 78% 20%, rgba(59, 130, 246, 0.06), transparent 65%),
+      linear-gradient(160deg, var(--surface-2), var(--surface));
   }
 
   .cover svg {

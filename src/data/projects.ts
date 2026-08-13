@@ -41,6 +41,18 @@ export interface Project {
   cover: CoverVariant;
   content: ProjectContent;
   skills?: string[];
+  /** 以下字段仅用于首页 Editorial Preview 卡片，不影响案例详情页 */
+  /** 预览标题 / 副标题（可覆盖 title / titleEn 的展示顺序） */
+  previewTitle?: string;
+  previewTitleEn?: string;
+  /** 一句话摘要（可短于完整 summary） */
+  previewSummary?: string;
+  /** 预览流程（精简步骤，与案例页流程一致） */
+  previewProcess?: string[];
+  /** 预览信息行（ROLE / FOCUS / DELIVERABLES / CONCEPT / YEAR / STATUS 等） */
+  previewMeta?: { label: string; value: string }[];
+  /** 预览小型结构图：MART 概念图 */
+  previewDiagram?: 'mart-concept';
 }
 
 export const projects: Project[] = [
@@ -57,6 +69,20 @@ export const projects: Project[] = [
       '参与大型企业物流数字化 SaaS 项目：从 Kickoff Meeting 与业务流程确认，到 Axure RP9 原型、PRD、字段字典、每周会议、测试与 Debug、用户手册与最终交付。',
     tags: ['Enterprise SaaS', 'Business Analysis', 'Prototype', 'Testing', 'Delivery'],
     cover: 'flow',
+    previewSummary: '参与大型企业物流数字化 SaaS 项目，从业务流程梳理、需求定义到测试与最终交付。',
+    previewProcess: [
+      'Kickoff Meeting',
+      'Axure RP9 Prototype',
+      'Process Clarification',
+      'PRD Contribution',
+      'Testing & Debugging',
+      'Delivery',
+    ],
+    previewMeta: [
+      { label: 'Role', value: 'Business Analysis · 原型设计 · 测试与交付' },
+      { label: 'Focus', value: 'Business Process · Requirement Analysis · Prototype · Testing' },
+      { label: 'Deliverables', value: 'Prototype · PRD · Field Dictionary · User Manual' },
+    ],
     content: {
       intro: [
         '这是我最完整的企业项目经历之一：参与一个大型企业的物流数字化 SaaS 项目。',
@@ -108,6 +134,12 @@ export const projects: Project[] = [
       '我正在独立构建的 AI 教育产品：面向教师培训机构和准教师，提供课件分析、AI 模拟课堂、课堂表现分析与成长路径——一个 AI 驱动的教师训练与成长系统。',
     tags: ['AI SaaS', 'Human-AI Collaboration', 'AI Simulation', 'Learning Analytics'],
     cover: 'nodes',
+    previewProcess: ['上传课件', 'AI 分析课件', 'AI 模拟课堂', '课堂表现分析', '成长路径'],
+    previewMeta: [
+      { label: 'Role', value: '独立产品 · 产品定义与开发' },
+      { label: 'Focus', value: 'AI SaaS · Human-AI Collaboration · Learning Analytics' },
+      { label: 'Deliverables', value: 'AI 模拟课堂 · 课堂表现分析 · 成长路径' },
+    ],
     content: {
       intro: [
         '这是我正在独立推进的 AI 教育产品。目标用户主要是教师培训机构、教师考试与教师培养机构；核心用户是 Pre-service Teachers——准教师、师范生等处于教师职业准备阶段的用户。',
@@ -161,6 +193,17 @@ export const projects: Project[] = [
       '2023 年完成的企业级 AI Copilot / Agent 战略项目：以 MART Framework 为设计框架，探索企业知识、数据分析、市场分析、内容生成、工作流与数字化转型能力在企业级 Copilot / Agent 中的整合路径。',
     tags: ['AI Strategy', 'AI Agent', 'Copilot', 'Generative AI'],
     cover: 'orbit',
+    previewTitle: 'MART-GPT',
+    previewTitleEn: 'Enterprise AI Copilot / Agent Strategy',
+    previewSummary:
+      '2023 年探索企业内部 AI Agent / Copilot 的应用方式，围绕企业知识、员工协作与 AI 能力之间的连接提出 MART 理念。',
+    previewDiagram: 'mart-concept',
+    previewMeta: [
+      { label: 'Concept', value: 'Enterprise AI Copilot / Agent' },
+      { label: 'Focus', value: 'AI Agent · Enterprise Knowledge · Human-AI Collaboration' },
+      { label: 'Year', value: '2023' },
+      { label: 'Status', value: 'Concept Project' },
+    ],
     content: {
       intro: [
         '这是 2023 年完成的企业级 AI Copilot / Agent 战略项目。重点不是「做一个 Chatbot」，而是把企业知识、数据分析、市场分析、内容生成、工作流与数字化转型能力，整合进企业级 AI Copilot / Agent 的应用设想。',

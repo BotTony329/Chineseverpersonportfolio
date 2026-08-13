@@ -8,6 +8,7 @@ import ProjectCard from '../../components/ProjectCard.astro';
 import StatusBadge from '../../components/StatusBadge.astro';
 import SideProjectsWall from '../../components/SideProjectsWall.astro';
 import CTABand from '../../components/CTABand.astro';
+import { BASE_URL } from '../../lib/base';
 
 const all = projectGroups.flatMap((g) => g.slugs.map(getProject));
 const jsonLd = [
@@ -19,7 +20,7 @@ const jsonLd = [
       '@type': 'ListItem',
       position: i + 1,
       name: p?.title,
-      url: new URL(`/projects/${p?.slug}`, site.url).href,
+      url: p ? `${site.url}/projects/${p.slug}` : undefined,
     })),
   },
 ];
@@ -113,8 +114,8 @@ const jsonLd = [
     <CTABand
       title="想深入了解某个项目？"
       desc="欢迎直接联系我，进一步交流项目细节与合作可能。"
-      primary={{ label: '联系我', href: '/contact' }}
-      secondary={{ label: '回到首页', href: '/' }}
+      primary={{ label: '联系我', href: `${BASE_URL}contact` }}
+      secondary={{ label: '回到首页', href: BASE_URL }}
     />
   </div>
 </Base>

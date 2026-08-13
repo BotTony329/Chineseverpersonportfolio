@@ -1,12 +1,13 @@
 ---
 /** 能力域 chips（首页） */
 import { skillDomains } from '../data/skills';
+import { BASE_URL } from '../lib/base';
 ---
 
 <div class="caps">
   {
     skillDomains.map((d) => (
-      <a class="chip chip--accent cap" href="/about#skills">
+      <a class="chip chip--accent cap" href={`${BASE_URL}about#skills`}>
         <span class="cap-title">{d.title}</span>
         <span class="cap-count">{d.skills.length}</span>
       </a>

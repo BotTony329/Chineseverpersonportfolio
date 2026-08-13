@@ -1,5 +1,6 @@
 ---
 import type { Project } from '../data/projects';
+import { BASE_URL } from '../lib/base';
 import StatusBadge from './StatusBadge.astro';
 import ProjectCover from './ProjectCover.astro';
 
@@ -12,7 +13,7 @@ const { project } = Astro.props;
 
 <header class="cs-header">
   <nav class="cs-breadcrumb" aria-label="面包屑">
-    <a href="/projects">项目</a>
+    <a href={`${BASE_URL}projects`}>项目</a>
     <span aria-hidden="true">/</span>
     <span aria-current="page">{project.title}</span>
   </nav>

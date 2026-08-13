@@ -1,5 +1,6 @@
 ---
 import { statusLabels, statusTone, type Project } from '../data/projects';
+import { BASE_URL } from '../lib/base';
 import ProjectCover from './ProjectCover.astro';
 
 interface Props {
@@ -11,7 +12,7 @@ const { project, index } = Astro.props;
 ---
 
 <article class="fcard card card--hover">
-  <a class="fcard-link" href={`/projects/${project.slug}`} aria-label={`查看案例：${project.title}`}>
+  <a class="fcard-link" href={`${BASE_URL}projects/${project.slug}`} aria-label={`查看案例：${project.title}`}>
     <div class="fcard-cover">
       <ProjectCover variant={project.cover} />
       <span class="fcard-index" aria-hidden="true">{index}</span>

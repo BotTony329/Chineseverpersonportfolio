@@ -35,7 +35,7 @@ const jsonLd = [
     '@type': 'CreativeWork',
     name: project.titleEn ? `${project.title}（${project.titleEn}）` : project.title,
     description: project.summary,
-    url: new URL(`/projects/${project.slug}`, site.url).href,
+    url: `${site.url}/projects/${project.slug}`,
     inLanguage: 'zh-CN',
     author: { '@type': 'Person', name: site.name, url: site.url },
     ...(project.year ? { dateCreated: project.year } : {}),

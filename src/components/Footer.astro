@@ -1,5 +1,6 @@
 ---
 import { nav, site } from '../data/site';
+import { BASE_URL } from '../lib/base';
 import CowCat from './CowCat.astro';
 
 const year = new Date().getFullYear();
@@ -9,7 +10,7 @@ const year = new Date().getFullYear();
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a class="brand" href="/" aria-label="Tony Zhao · 返回首页">
+        <a class="brand" href={BASE_URL} aria-label="Tony Zhao · 返回首页">
           <span class="brand-mark"><CowCat /></span>
           <span>{site.name}</span>
         </a>
@@ -21,7 +22,7 @@ const year = new Date().getFullYear();
         <h4>导航</h4>
         <ul>
           {nav.map((item) => (
-            <li><a href={item.href}>{item.label}</a></li>
+            <li><a href={`${BASE_URL}${item.href.slice(1)}`}>{item.label}</a></li>
           ))}
         </ul>
       </div>

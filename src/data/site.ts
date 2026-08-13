@@ -5,8 +5,8 @@
 export const site = {
   name: 'Tony Zhao',
   nameZh: 'Tony Zhao',
-  /** 部署后替换为真实域名（影响 canonical / OG / sitemap） */
-  url: 'https://example.com',
+  /** 站点公开 URL（含 GitHub Pages 子路径）。改用自定义域名时替换为 https://your-domain.com，并同步 astro.config.ts 的 base 与 public/robots.txt */
+  url: 'https://bottony329.github.io/Chineseverpersonportfolio',
   tagline: 'Business Analyst · Digital Transformation · AI Product',
   description:
     'Tony Zhao：Business Analyst / 数字化转型 / AI 产品与 SaaS 实践。从业务问题出发，理解需求、梳理流程、设计解决方案，并推动数字产品真正落地。',

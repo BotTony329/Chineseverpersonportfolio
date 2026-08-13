@@ -5,6 +5,7 @@ import { strengths, skillDomains } from '../data/skills';
 import SectionTitle from '../components/SectionTitle.astro';
 import WorkingMethod from '../components/WorkingMethod.astro';
 import CTABand from '../components/CTABand.astro';
+import { BASE_URL } from '../lib/base';
 
 const directions = ['Business Analysis', 'Digital Transformation', 'AI Product'];
 ---
@@ -112,8 +113,8 @@ const directions = ['Business Analysis', 'Digital Transformation', 'AI Product']
     <CTABand
       title="想一起解决业务问题？"
       desc="无论是企业数字化项目、BA / 产品合作，还是 AI 产品想法，欢迎联系我。"
-      primary={{ label: '联系我', href: '/contact' }}
-      secondary={{ label: '看我的经历', href: '/journey' }}
+      primary={{ label: '联系我', href: `${BASE_URL}contact` }}
+      secondary={{ label: '看我的经历', href: `${BASE_URL}journey` }}
     />
   </div>
 </Base>

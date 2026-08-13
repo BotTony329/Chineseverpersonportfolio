@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { BASE_URL } from '../lib/base';
 import SectionTitle from '../components/SectionTitle.astro';
 import CTABand from '../components/CTABand.astro';
 
@@ -13,7 +14,7 @@ const stages = [
       'Master of Information Systems，University of Melbourne',
       'Bachelor of Commerce（Information Systems），Victoria University of Wellington',
     ],
-    links: [{ label: '关于我', href: '/about' }],
+    links: [{ label: '关于我', href: `${BASE_URL}about` }],
   },
   {
     id: '02',
@@ -25,7 +26,7 @@ const stages = [
       '从 Production Team Briefing 到 UX / Product Design、开发协作、Testing 与上线',
       '完成两个新的产品模块上线',
     ],
-    links: [{ label: 'Product Discovery & Feature Delivery', href: '/projects/product-discovery-delivery' }],
+    links: [{ label: 'Product Discovery & Feature Delivery', href: `${BASE_URL}projects/product-discovery-delivery` }],
   },
   {
     id: '03',
@@ -38,9 +39,9 @@ const stages = [
       '完成企业级 AI Copilot / Agent 战略项目（MART-GPT，2023）',
     ],
     links: [
-      { label: '企业物流 SaaS', href: '/projects/enterprise-logistics-saas' },
-      { label: 'FMCG 市场进入与数字化转型', href: '/projects/fmcg-digital-transformation' },
-      { label: 'MART-GPT', href: '/projects/mart-gpt-strategy' },
+      { label: '企业物流 SaaS', href: `${BASE_URL}projects/enterprise-logistics-saas` },
+      { label: 'FMCG 市场进入与数字化转型', href: `${BASE_URL}projects/fmcg-digital-transformation` },
+      { label: 'MART-GPT', href: `${BASE_URL}projects/mart-gpt-strategy` },
     ],
   },
   {
@@ -52,7 +53,7 @@ const stages = [
       '正在独立构建 AI 教师成长平台（AI SaaS）',
       '持续实验 AI Agent、数据产品、自动化工具与电商等方向',
     ],
-    links: [{ label: 'AI 教师成长平台', href: '/projects/ai-teacher-growth-platform' }],
+    links: [{ label: 'AI 教师成长平台', href: `${BASE_URL}projects/ai-teacher-growth-platform` }],
   },
 ];
 
@@ -142,8 +143,8 @@ const funded = ['电商项目', '网站', 'SaaS', 'AI API', '软件工具', '独
     <CTABand
       title="想了解更完整的故事？"
       desc="欢迎直接联系我，或看看我的项目与能力。"
-      primary={{ label: '联系我', href: '/contact' }}
-      secondary={{ label: '查看项目', href: '/projects' }}
+      primary={{ label: '联系我', href: `${BASE_URL}contact` }}
+      secondary={{ label: '查看项目', href: `${BASE_URL}projects` }}
     />
   </div>
 </Base>

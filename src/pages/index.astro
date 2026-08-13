@@ -11,6 +11,7 @@ import CapabilityChips from '../components/CapabilityChips.astro';
 import WorkingMethod from '../components/WorkingMethod.astro';
 import SideProjectsWall from '../components/SideProjectsWall.astro';
 import CTABand from '../components/CTABand.astro';
+import { BASE_URL } from '../lib/base';
 
 const featured = getFeatured();
 const more = projects.filter((p) =>
@@ -40,8 +41,8 @@ const jsonLd = [
         <FlowStrip steps={[...site.workflow]} />
       </div>
       <div class="hero-cta reveal" style="--rd:.24s">
-        <a class="btn btn-primary" href="/projects">查看项目</a>
-        <a class="btn btn-ghost" href="/about">了解我</a>
+        <a class="btn btn-primary" href={`${BASE_URL}projects`}>查看项目</a>
+        <a class="btn btn-ghost" href={`${BASE_URL}about`}>了解我</a>
       </div>
     </div>
   </section>
@@ -64,7 +65,7 @@ const jsonLd = [
         label="重点项目"
         title="从业务问题，到真正落地的产品"
         desc="三个重点项目：一个完整的企业 SaaS 生命周期、一个正在独立构建的 AI SaaS 产品，以及 2023 年的企业级 AI Copilot / Agent 战略项目。"
-        link={{ label: '查看全部项目', href: '/projects' }}
+        link={{ label: '查看全部项目', href: `${BASE_URL}projects` }}
       />
       <div class="featured-grid">
         {
@@ -133,8 +134,8 @@ const jsonLd = [
     <CTABand
       title="有业务问题需要落地？"
       desc="无论是企业数字化项目、BA / 产品合作，还是 AI 产品想法，欢迎联系我。"
-      primary={{ label: '联系我', href: '/contact' }}
-      secondary={{ label: '查看全部项目', href: '/projects' }}
+      primary={{ label: '联系我', href: `${BASE_URL}contact` }}
+      secondary={{ label: '查看全部项目', href: `${BASE_URL}projects` }}
     />
   </div>
 </Base>

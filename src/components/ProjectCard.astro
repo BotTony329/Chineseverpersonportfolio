@@ -1,5 +1,6 @@
 ---
 import { statusLabels, statusTone, type Project } from '../data/projects';
+import { BASE_URL } from '../lib/base';
 
 interface Props {
   project: Project;
@@ -10,7 +11,7 @@ const { project, index } = Astro.props;
 ---
 
 <article class="pcard card card--hover">
-  <a class="pcard-link" href={`/projects/${project.slug}`} aria-label={`查看案例：${project.title}`}>
+  <a class="pcard-link" href={`${BASE_URL}projects/${project.slug}`} aria-label={`查看案例：${project.title}`}>
     <div class="pcard-top">
       {index && <span class="pcard-index">{index}</span>}
       {project.status && <span class={`badge badge--${statusTone[project.status]}`}>{statusLabels[project.status]}</span>}

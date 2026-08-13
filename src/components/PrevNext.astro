@@ -1,5 +1,6 @@
 ---
 import type { Project } from '../data/projects';
+import { BASE_URL } from '../lib/base';
 
 interface Props {
   prev?: Project;
@@ -11,7 +12,7 @@ const { prev, next } = Astro.props;
 
 <nav class="pn" aria-label="项目导航">
   {prev ? (
-    <a class="pn-card card" href={`/projects/${prev.slug}`}>
+    <a class="pn-card card" href={`${BASE_URL}projects/${prev.slug}`}>
       <span class="pn-dir" aria-hidden="true">←</span>
       <span class="pn-text">
         <span class="pn-label">上一个项目</span>
@@ -22,7 +23,7 @@ const { prev, next } = Astro.props;
     <span />
   )}
   {next ? (
-    <a class="pn-card card pn-card--next" href={`/projects/${next.slug}`}>
+    <a class="pn-card card pn-card--next" href={`${BASE_URL}projects/${next.slug}`}>
       <span class="pn-text">
         <span class="pn-label">下一个项目</span>
         <span class="pn-title">{next.title}</span>

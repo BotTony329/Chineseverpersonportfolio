@@ -41,13 +41,18 @@ npm run assets   # 重新生成 favicon / OG 卡片（scripts/generate-assets.mj
 
 ## 部署方法
 
-站点为纯静态输出，可部署到任意静态托管平台（Netlify / Vercel / GitHub Pages / Cloudflare Pages 等）：
+已配置 **GitHub Pages（Actions）自动部署**：push 到 `main` 分支即自动构建并发布（`.github/workflows/deploy.yml`）。
+
+- 站点地址：<https://bottony329.github.io/Chineseverpersonportfolio/>
+- 站点部署在项目子路径 `/Chineseverpersonportfolio/`，由 `astro.config.ts` 的 `base` 配置支持；本地 `npm run dev` 不受影响（`BASE_URL` 在开发环境为 `/`）
+
+如需部署到其他静态托管平台（Netlify / Vercel / Cloudflare Pages 等），站点为纯静态输出：
 
 ```bash
 npm run build
 ```
 
-将 `dist/` 目录发布到托管平台（或按平台文档关联仓库自动构建：构建命令 `npm run build`，输出目录 `dist`）。
+将 `dist/` 目录发布到托管平台即可。若平台提供根路径部署（无子路径），把 `astro.config.ts` 的 `base` 改为 `/` 并同步更新 `src/data/site.ts` 的 `site.url` 与 `public/robots.txt`。
 
 ## AI Assistant 架构（provider-agnostic）
 
@@ -62,15 +67,14 @@ npm run build
 
 模块划分：`src/lib/chat/`（types / config / local-provider / openai-compat-provider / portfolio-context / 编排 index），UI 在 `src/components/ChatAssistant.astro` 与 `src/scripts/ai-assistant.ts`。
 
-## 域名替换说明（部署前必做）
+## 域名说明
 
-`src/data/site.ts` 中 `site.url` 当前为占位符 `https://example.com`，影响 canonical / Open Graph / sitemap。
+当前 `src/data/site.ts` 的 `site.url` 为 GitHub Pages 地址 `https://bottony329.github.io/Chineseverpersonportfolio`，用于 canonical / Open Graph / sitemap。
 
-**部署前请替换为真实域名**，例如：
+**如果将来改用自定义域名**（如 `https://your-domain.com`），需要同步修改三处：
 
-```ts
-export const site = {
-  // ...
-  url: 'https://your-domain.com',
-};
-```
+1. `src/data/site.ts`：`site.url` → `https://your-domain.com`
+2. `astro.config.ts`：`base` → `/`
+3. `public/robots.txt`：Sitemap 地址改为 `https://your-domain.com/sitemap-index.xml`
+
+并在 GitHub 仓库 Settings → Pages 中配置 Custom domain（添加 CNAME 记录后由 Actions 自动处理）。

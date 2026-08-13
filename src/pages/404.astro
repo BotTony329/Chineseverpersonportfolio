@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { BASE_URL } from '../lib/base';
 ---
 
 <Base
@@ -16,8 +17,8 @@ import Base from '../layouts/Base.astro';
         你访问的页面可能已被移动或删除。可以回到首页，或看看项目案例。
       </p>
       <div class="nf-actions">
-        <a class="btn btn-primary" href="/">返回首页</a>
-        <a class="btn btn-ghost" href="/projects">查看项目</a>
+        <a class="btn btn-primary" href={BASE_URL}>返回首页</a>
+        <a class="btn btn-ghost" href={`${BASE_URL}projects`}>查看项目</a>
       </div>
     </div>
   </section>

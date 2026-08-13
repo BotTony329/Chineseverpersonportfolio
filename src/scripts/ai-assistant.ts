@@ -8,6 +8,7 @@
 import { quickQuestions, assistantMeta } from '../data/ai-knowledge';
 import { answerQuestion } from '../lib/chat';
 import { DEFAULTS, getProviderConfig, saveLocalConfig, clearLocalConfig } from '../lib/chat/config';
+import { BASE_URL } from '../lib/base';
 
 interface StoredMsg {
   role: 'user' | 'assistant';
@@ -61,7 +62,7 @@ function renderMessage(msgs: HTMLElement, msg: StoredMsg) {
     const links = el('div', 'msg-links');
     for (const link of msg.links) {
       const a = el('a', undefined, `${link.label} →`);
-      a.href = link.href;
+      a.href = link.href.startsWith('/') ? `${BASE_URL}${link.href.slice(1)}` : link.href;
       links.appendChild(a);
     }
     row.appendChild(links);

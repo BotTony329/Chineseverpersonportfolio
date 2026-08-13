@@ -1,15 +1,18 @@
 ---
 import { nav, site } from '../data/site';
+import { BASE_URL } from '../lib/base';
 import CowCat from './CowCat.astro';
 
-const pathname = Astro.url.pathname;
+const basePath = BASE_URL === '/' ? '' : BASE_URL.replace(/\/+$/, '');
+const rawPath = Astro.url.pathname;
+const pathname = rawPath.startsWith(basePath) && basePath ? rawPath.slice(basePath.length) || '/' : rawPath;
 const isActive = (href: string) =>
   href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href + '/');
 ---
 
 <header class="site-header" id="site-header">
   <div class="container header-inner">
-    <a class="brand" href="/" aria-label="Tony Zhao · 返回首页">
+    <a class="brand" href={BASE_URL} aria-label="Tony Zhao · 返回首页">
       <span class="brand-mark"><CowCat /></span>
       <span>Tony Zhao</span>
     </a>
@@ -17,7 +20,7 @@ const isActive = (href: string) =>
     <nav class="nav" aria-label="主导航">
       {
         nav.map((item) => (
-          <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined} class:list={{ 'is-active': isActive(item.href) }}>
+          <a href={`${BASE_URL}${item.href.slice(1)}`} aria-current={isActive(item.href) ? 'page' : undefined} class:list={{ 'is-active': isActive(item.href) }}>
             {item.label}
           </a>
         ))
@@ -43,7 +46,7 @@ const isActive = (href: string) =>
   <nav aria-label="移动端导航">
     {
       nav.map((item) => (
-        <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined} class:list={{ 'is-active': isActive(item.href) }}>
+        <a href={`${BASE_URL}${item.href.slice(1)}`} aria-current={isActive(item.href) ? 'page' : undefined} class:list={{ 'is-active': isActive(item.href) }}>
           {item.label}
         </a>
       ))

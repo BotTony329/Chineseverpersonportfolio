@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ChatAssistant from '../components/ChatAssistant.astro';
 import { site, personJsonLd } from '../data/site';
+import { BASE_URL } from '../lib/base';
 import '../styles/global.css';
 
 interface Props {
@@ -26,8 +27,8 @@ const {
 
 const fullTitle =
   path === '/' ? `${title} · ${site.tagline}` : `${title} · ${site.name}`;
-const canonical = new URL(path, site.url).href;
-const ogImage = new URL('/og.png', site.url).href;
+const canonical = path === '/' ? `${site.url}/` : `${site.url}${path}`;
+const ogImage = `${site.url}/og.png`;
 ---
 
 <!doctype html>
@@ -41,9 +42,9 @@ const ogImage = new URL('/og.png', site.url).href;
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta name="theme-color" content="#0b0f14" />
     <meta name="format-detection" content="telephone=no, email=no" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/png" sizes="180x180" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="icon" type="image/svg+xml" href={`${BASE_URL}favicon.svg`} />
+    <link rel="icon" type="image/png" sizes="180x180" href={`${BASE_URL}favicon.png`} />
+    <link rel="apple-touch-icon" href={`${BASE_URL}favicon.png`} />
 
     <meta property="og:site_name" content={site.name} />
     <meta property="og:locale" content="zh_CN" />

@@ -1,0 +1,66 @@
+---
+import type { Highlight } from '../data/projects';
+
+interface Props {
+  items: Highlight[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="hgrid">
+  {
+    items.map((item, i) => (
+      <div class="hcard card reveal" style={`--rd:${(i % 3) * 0.07}s`}>
+        <span class="hcard-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+        <h3 class="hcard-title">{item.title}</h3>
+        <p class="hcard-text">{item.text}</p>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .hgrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .hcard {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px;
+  }
+
+  .hcard-num {
+    font-family: var(--font-mono);
+    font-size: var(--fs-tiny);
+    color: var(--text-3);
+    letter-spacing: 0.1em;
+  }
+
+  .hcard-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .hcard-text {
+    font-size: 14px;
+    color: var(--text-2);
+  }
+
+  @media (max-width: 900px) {
+    .hgrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .hgrid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

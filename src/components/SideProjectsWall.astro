@@ -1,0 +1,50 @@
+---
+/** 独立实践 / Side Projects（首页 teaser） */
+import { sideProjects } from '../data/projects';
+---
+
+<div class="side">
+  <p class="side-quote">
+    我喜欢 <strong>Build</strong>。
+  </p>
+  <p class="lead">
+    不仅分析问题，也会尝试真正把 Solution 做出来——用工作之外的时间和自己的资金，持续实验产品 Idea。
+  </p>
+  <div class="side-chips">
+    {sideProjects.map((s) => (
+      <span class="chip">{s}</span>
+    ))}
+  </div>
+</div>
+
+<style>
+  .side {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 760px;
+  }
+
+  .side-quote {
+    font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .side-quote strong {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .side-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .side-chips .chip {
+    padding: 9px 18px;
+    font-size: 14px;
+  }
+</style>

@@ -1,0 +1,51 @@
+---
+interface Props {
+  title: string;
+  desc?: string;
+  primary: { label: string; href: string };
+  secondary?: { label: string; href: string };
+}
+
+const { title, desc, primary, secondary } = Astro.props;
+---
+
+<section class="cta-wrap">
+  <div class="cta card reveal">
+    <h2>{title}</h2>
+    {desc && <p class="lead">{desc}</p>}
+    <div class="cta-actions">
+      <a class="btn btn-primary" href={primary.href}>{primary.label}</a>
+      {secondary && <a class="btn btn-ghost" href={secondary.href}>{secondary.label}</a>}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-wrap {
+    padding-block: var(--sp-6);
+  }
+
+  .cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 18px;
+    padding: var(--sp-6) 24px;
+    background:
+      radial-gradient(560px 260px at 50% -40%, rgba(59, 130, 246, 0.14), transparent 70%),
+      linear-gradient(180deg, var(--surface-2), var(--surface));
+  }
+
+  .cta .lead {
+    max-width: 560px;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 10px;
+  }
+</style>

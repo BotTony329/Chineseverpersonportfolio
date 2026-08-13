@@ -1,0 +1,99 @@
+---
+import type { Project } from '../data/projects';
+
+interface Props {
+  prev?: Project;
+  next?: Project;
+}
+
+const { prev, next } = Astro.props;
+---
+
+<nav class="pn" aria-label="项目导航">
+  {prev ? (
+    <a class="pn-card card" href={`/projects/${prev.slug}`}>
+      <span class="pn-dir" aria-hidden="true">←</span>
+      <span class="pn-text">
+        <span class="pn-label">上一个项目</span>
+        <span class="pn-title">{prev.title}</span>
+      </span>
+    </a>
+  ) : (
+    <span />
+  )}
+  {next ? (
+    <a class="pn-card card pn-card--next" href={`/projects/${next.slug}`}>
+      <span class="pn-text">
+        <span class="pn-label">下一个项目</span>
+        <span class="pn-title">{next.title}</span>
+      </span>
+      <span class="pn-dir" aria-hidden="true">→</span>
+    </a>
+  ) : (
+    <span />
+  )}
+</nav>
+
+<style>
+  .pn {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: var(--sp-6);
+  }
+
+  .pn-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    color: inherit;
+    transition:
+      border-color var(--dur) ease,
+      transform var(--dur) var(--ease);
+  }
+
+  .pn-card:hover {
+    color: inherit;
+    border-color: var(--accent-line);
+    transform: translateY(-2px);
+  }
+
+  .pn-card--next {
+    text-align: right;
+    justify-content: flex-end;
+  }
+
+  .pn-dir {
+    font-size: 18px;
+    color: var(--accent);
+  }
+
+  .pn-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .pn-label {
+    font-size: 12px;
+    color: var(--text-3);
+    letter-spacing: 0.08em;
+  }
+
+  .pn-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 560px) {
+    .pn {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,83 @@
+---
+import type { ProcessStep } from '../data/projects';
+
+interface Props {
+  steps: ProcessStep[];
+}
+
+const { steps } = Astro.props;
+---
+
+<ol class="pflow">
+  {
+    steps.map((s, i) => (
+      <li class="pflow-item">
+        <span class="pflow-dot" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+        <div class="pflow-content">
+          <h3 class="pflow-step">{s.step}</h3>
+          {s.note && <p class="pflow-note">{s.note}</p>}
+        </div>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .pflow {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pflow-item {
+    position: relative;
+    display: flex;
+    gap: 20px;
+    padding-bottom: 28px;
+  }
+
+  .pflow-item:last-child {
+    padding-bottom: 0;
+  }
+
+  /* 连接线 */
+  .pflow-item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 34px;
+    bottom: -2px;
+    width: 1px;
+    background: linear-gradient(180deg, rgba(59, 130, 246, 0.4), rgba(255, 255, 255, 0.06));
+  }
+
+  .pflow-dot {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--accent-line);
+    background: var(--surface);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+  }
+
+  .pflow-step {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-top: 4px;
+  }
+
+  .pflow-note {
+    font-size: var(--fs-small);
+    color: var(--text-3);
+    margin-top: 2px;
+  }
+</style>

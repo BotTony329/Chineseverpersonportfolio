@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="页面不存在"
+  description="你访问的页面不存在或已被移动。返回首页或浏览项目。"
+  path="/404"
+  noindex
+>
+  <section class="nf">
+    <div class="container">
+      <p class="nf-code" aria-hidden="true">404</p>
+      <h1>这个页面不存在</h1>
+      <p class="lead">
+        你访问的页面可能已被移动或删除。可以回到首页，或看看项目案例。
+      </p>
+      <div class="nf-actions">
+        <a class="btn btn-primary" href="/">返回首页</a>
+        <a class="btn btn-ghost" href="/projects">查看项目</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    min-height: 62vh;
+    display: flex;
+    align-items: center;
+    padding-block: var(--sp-7);
+  }
+
+  .nf .container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .nf-code {
+    font-family: var(--font-mono);
+    font-size: clamp(4rem, 12vw, 7rem);
+    font-weight: 600;
+    line-height: 1;
+    color: transparent;
+    background: linear-gradient(120deg, var(--accent), rgba(59, 130, 246, 0.25));
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  .nf h1 {
+    font-size: var(--fs-h2);
+  }
+
+  .nf-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 14px;
+  }
+</style>

@@ -1,0 +1,111 @@
+---
+import { statusLabels, statusTone, type Project } from '../data/projects';
+
+interface Props {
+  project: Project;
+  index?: string;
+}
+
+const { project, index } = Astro.props;
+---
+
+<article class="pcard card card--hover">
+  <a class="pcard-link" href={`/projects/${project.slug}`} aria-label={`查看案例：${project.title}`}>
+    <div class="pcard-top">
+      {index && <span class="pcard-index">{index}</span>}
+      {project.status && <span class={`badge badge--${statusTone[project.status]}`}>{statusLabels[project.status]}</span>}
+    </div>
+    <h3 class="pcard-title">{project.title}</h3>
+    {project.titleEn && <p class="pcard-en">{project.titleEn}</p>}
+    <p class="pcard-role">{project.role}</p>
+    <p class="pcard-summary">{project.summary}</p>
+    <div class="pcard-tags">
+      {project.tags.slice(0, 3).map((t) => (
+        <span class="chip">{t}</span>
+      ))}
+    </div>
+    <span class="pcard-more">
+      查看案例 <span class="arrow" aria-hidden="true">→</span>
+    </span>
+  </a>
+</article>
+
+<style>
+  .pcard-link {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+    padding: 24px;
+    color: inherit;
+  }
+
+  .pcard-link:hover {
+    color: inherit;
+  }
+
+  .pcard-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+
+  .pcard-index {
+    font-family: var(--font-mono);
+    font-size: var(--fs-tiny);
+    color: var(--text-3);
+    letter-spacing: 0.12em;
+  }
+
+  .pcard-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .pcard-en {
+    font-size: var(--fs-tiny);
+    color: var(--text-3);
+    letter-spacing: 0.02em;
+    margin-top: -6px;
+  }
+
+  .pcard-role {
+    font-size: var(--fs-tiny);
+    color: var(--accent);
+    margin-top: -2px;
+  }
+
+  .pcard-summary {
+    font-size: 14px;
+    color: var(--text-2);
+    flex-grow: 1;
+  }
+
+  .pcard-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .pcard-more {
+    margin-top: 14px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .pcard-more .arrow {
+    transition: transform var(--dur) var(--ease);
+  }
+
+  .pcard:hover .pcard-more .arrow {
+    transform: translateX(4px);
+  }
+</style>

@@ -1,0 +1,47 @@
+---
+import { nav, site } from '../data/site';
+import CowCat from './CowCat.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="/" aria-label="Tony Zhao · 返回首页">
+          <span class="brand-mark"><CowCat /></span>
+          <span>{site.name}</span>
+        </a>
+        <p class="tagline">{site.tagline}</p>
+        <p class="tagline">{site.location}</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>导航</h4>
+        <ul>
+          {nav.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>联系</h4>
+        <ul>
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li>
+            <a href={site.linkedin} target="_blank" rel="noopener noreferrer">
+              LinkedIn <span aria-hidden="true">↗</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© {year} {site.name}</span>
+      <span>从业务问题出发，推动数字产品真正落地</span>
+    </div>
+  </div>
+</footer>

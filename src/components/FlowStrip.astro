@@ -1,0 +1,163 @@
+---
+/** 流程条：节点脉冲 + 连线上的流动点，表达「分析 → 设计 → 构建 → 交付」。 */
+interface Props {
+  steps: string[];
+}
+
+const { steps } = Astro.props;
+---
+
+<ol class="flowstrip">
+  {
+    steps.map((step, i) => (
+      <>
+        {i > 0 && (
+          <li class="flow-line" style={`--fd:${i * 0.35}s`} aria-hidden="true">
+            <span class="flow-dot" />
+          </li>
+        )}
+        <li class="flow-item">
+          <span class="flow-node" style={`--fd:${i * 0.35}s`} aria-hidden="true">
+            <span class="flow-node-core" />
+          </span>
+          <span class="flow-label">{step}</span>
+        </li>
+      </>
+    ))
+  }
+</ol>
+
+<style>
+  .flowstrip {
+    list-style: none;
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .flow-item {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    min-width: 92px;
+  }
+
+  .flow-node {
+    position: relative;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+  }
+
+  .flow-node-core {
+    position: absolute;
+    inset: 2px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: node-pulse 2.6s ease-in-out infinite;
+    animation-delay: var(--fd, 0s);
+  }
+
+  @keyframes node-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
+  }
+
+  .flow-label {
+    font-size: var(--fs-small);
+    color: var(--text-2);
+    white-space: nowrap;
+  }
+
+  .flow-line {
+    flex: 1 1 auto;
+    height: 2px;
+    margin-top: 6px;
+    background: linear-gradient(90deg, rgba(59, 130, 246, 0.45), rgba(255, 255, 255, 0.07));
+    position: relative;
+    min-width: 24px;
+  }
+
+  .flow-dot {
+    position: absolute;
+    top: -2px;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent-glow);
+    animation: flow-travel-x 3s linear infinite;
+    animation-delay: var(--fd, 0s);
+  }
+
+  @keyframes flow-travel-x {
+    0% {
+      left: 0;
+      opacity: 0;
+    }
+    12% {
+      opacity: 1;
+    }
+    88% {
+      opacity: 1;
+    }
+    100% {
+      left: calc(100% - 6px);
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .flowstrip {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .flow-item {
+      flex-direction: row;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .flow-line {
+      width: 2px;
+      height: 28px;
+      flex: none;
+      margin: 6px 0 6px 6px;
+      background: linear-gradient(180deg, rgba(59, 130, 246, 0.45), rgba(255, 255, 255, 0.07));
+    }
+
+    .flow-dot {
+      top: 0;
+      left: -2px;
+      animation-name: flow-travel-y;
+    }
+
+    @keyframes flow-travel-y {
+      0% {
+        top: 0;
+        opacity: 0;
+      }
+      12% {
+        opacity: 1;
+      }
+      88% {
+        opacity: 1;
+      }
+      100% {
+        top: calc(100% - 6px);
+        opacity: 0;
+      }
+    }
+  }
+</style>

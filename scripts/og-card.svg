@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="glow" cx="0.82" cy="0.12" r="0.75">
+      <stop offset="0" stop-color="#3b82f6" stop-opacity="0.22"/>
+      <stop offset="0.55" stop-color="#3b82f6" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#0b0f14" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#ffffff" opacity="0.05"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="#0b0f14"/>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- 品牌：奶牛猫 + 署名 -->
+  <g transform="translate(88 76) scale(1.5)">
+    <rect width="64" height="64" rx="15" fill="#12161c" stroke="rgba(255,255,255,0.12)"/>
+    <path d="M19.5 9.5 28.5 20 10.5 23.5Z" fill="#0b0f14"/>
+    <path d="M44.5 9.5 35.5 20 53.5 23.5Z" fill="#e8ecf1"/>
+    <circle cx="32" cy="33.5" r="16.5" fill="#e8ecf1"/>
+    <circle cx="25.5" cy="24.5" r="8" fill="#0b0f14"/>
+    <circle cx="26" cy="25" r="1.7" fill="#e8ecf1"/>
+    <circle cx="38.5" cy="26.5" r="1.9" fill="#3b82f6"/>
+    <path d="M30.8 34.5 33.2 34.5 32 37.4Z" fill="#3b82f6"/>
+    <circle cx="41" cy="37.5" r="4.2" fill="#0b0f14" opacity="0.85"/>
+  </g>
+  <text x="208" y="128" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="34" font-weight="600" fill="#e8ecf1" letter-spacing="2">Tony Zhao</text>
+  <text x="208" y="160" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="20" fill="#5c6672" letter-spacing="4">PORTFOLIO</text>
+
+  <!-- 主标题 -->
+  <text x="88" y="310" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="68" font-weight="600" fill="#e8ecf1">让业务问题，</text>
+  <text x="88" y="398" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="68" font-weight="600" fill="#e8ecf1">变成真正落地的<span fill="#3b82f6">数字产品</span>。</text>
+
+  <!-- 副标题 -->
+  <text x="90" y="468" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="26" fill="#9aa5b1" letter-spacing="2">Business Analyst · Digital Transformation · AI Product</text>
+
+  <!-- 流程条 -->
+  <g transform="translate(88 540)" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="19" fill="#9aa5b1">
+    <circle cx="7" cy="-5" r="5" fill="#3b82f6"/>
+    <text x="24" y="0">业务分析</text>
+    <text x="130" y="0" fill="#3b82f6">→</text>
+    <circle cx="175" cy="-5" r="5" fill="#3b82f6" opacity="0.85"/>
+    <text x="192" y="0">需求定义</text>
+    <text x="298" y="0" fill="#3b82f6">→</text>
+    <circle cx="343" cy="-5" r="5" fill="#3b82f6" opacity="0.7"/>
+    <text x="360" y="0">产品设计</text>
+    <text x="466" y="0" fill="#3b82f6">→</text>
+    <circle cx="511" cy="-5" r="5" fill="#3b82f6" opacity="0.55"/>
+    <text x="528" y="0">开发协作</text>
+    <text x="634" y="0" fill="#3b82f6">→</text>
+    <circle cx="679" cy="-5" r="5" fill="#3b82f6" opacity="0.4"/>
+    <text x="696" y="0">测试</text>
+    <text x="764" y="0" fill="#3b82f6">→</text>
+    <circle cx="809" cy="-5" r="5" fill="#3b82f6" opacity="0.3"/>
+    <text x="826" y="0">交付</text>
+  </g>
+</svg>

@@ -1,0 +1,243 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+import { strengths, skillDomains } from '../data/skills';
+import SectionTitle from '../components/SectionTitle.astro';
+import WorkingMethod from '../components/WorkingMethod.astro';
+import CTABand from '../components/CTABand.astro';
+
+const directions = ['Business Analysis', 'Digital Transformation', 'AI Product'];
+---
+
+<Base
+  title="关于我"
+  description="Tony Zhao：Information Systems 背景，职业方向为 Business Analysis、Digital Transformation 与 AI Product。理解业务、建模问题、设计方案、推动交付。"
+  path="/about"
+>
+  <section class="page-head">
+    <div class="container">
+      <p class="eyebrow reveal">About</p>
+      <h1 class="reveal" style="--rd:.06s">关于我</h1>
+      <p class="lead page-intro reveal" style="--rd:.12s">
+        从业务问题出发，理解需求、梳理流程、设计解决方案，并推动数字产品真正落地。
+      </p>
+    </div>
+  </section>
+
+  <!-- 我是谁 -->
+  <section class="section">
+    <div class="container">
+      <SectionTitle index="01" label="我是谁" title="Business 与 System 之间" />
+      <div class="who-grid">
+        <div class="who-text reveal">
+          <p class="lead">
+            我有 Information Systems 教育背景：Commerce（Information Systems）学士与 Information Systems 硕士。
+            这段教育经历让我习惯同时从业务与技术两个角度看问题。
+          </p>
+          <p class="lead">
+            我的工作不是单纯 UI/UX，也不是单纯软件开发——而是从业务问题出发，理解需求、梳理流程、设计解决方案，并推动数字产品真正落地。
+          </p>
+          <div class="who-directions">
+            {directions.map((d) => (
+              <span class="chip chip--accent">{d}</span>
+            ))}
+          </div>
+        </div>
+        <blockquote class="who-quote card reveal" style="--rd:.1s">
+          <p>
+            从 Information Systems 背景出发，逐步形成 Business Analysis + Digital Transformation + AI
+            Product 的复合能力，并持续将这些能力用于真实企业项目和自己的 AI SaaS 产品。
+          </p>
+          <footer>—— 我的核心故事</footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- 我擅长什么 -->
+  <section class="section">
+    <div class="container">
+      <SectionTitle index="02" label="我擅长什么" title="从需求到交付的关键能力" />
+      <div class="str-grid">
+        {
+          strengths.map((s, i) => (
+            <div class="str card reveal" style={`--rd:${(i % 3) * 0.06}s`}>
+              <span class="str-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <span class="str-name">{s}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- 工作方式 -->
+  <section class="section">
+    <div class="container">
+      <SectionTitle index="03" label="我的工作方式" title="Understand → Structure → Design → Build → Validate → Deliver" />
+      <div class="reveal">
+        <WorkingMethod />
+      </div>
+    </div>
+  </section>
+
+  <!-- 技能域 -->
+  <section class="section" id="skills">
+    <div class="container">
+      <SectionTitle
+        index="04"
+        label="技能"
+        title="按能力域分类"
+        desc="不使用百分比进度条——能力体现在项目里，而不是数字里。"
+      />
+      <div class="dom-grid">
+        {
+          skillDomains.map((d, i) => (
+            <div class="dom card reveal" style={`--rd:${(i % 3) * 0.06}s`}>
+              <h3 class="dom-title">{d.title}</h3>
+              <p class="dom-desc">{d.desc}</p>
+              <div class="dom-chips">
+                {d.skills.map((s) => (
+                  <span class="chip">{s}</span>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <CTABand
+      title="想一起解决业务问题？"
+      desc="无论是企业数字化项目、BA / 产品合作，还是 AI 产品想法，欢迎联系我。"
+      primary={{ label: '联系我', href: '/contact' }}
+      secondary={{ label: '看我的经历', href: '/journey' }}
+    />
+  </div>
+</Base>
+
+<script>
+  import { initReveal } from '../scripts/reveal';
+  initReveal();
+</script>
+
+<style>
+  .page-head {
+    padding-block: clamp(48px, 8vh, 88px) var(--sp-5);
+  }
+
+  .page-intro {
+    max-width: 640px;
+    margin-top: 18px;
+  }
+
+  .who-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 24px;
+    align-items: stretch;
+  }
+
+  .who-text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .who-directions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .who-quote {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+    padding: 28px;
+    border-left: 3px solid var(--accent);
+  }
+
+  .who-quote p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text);
+  }
+
+  .who-quote footer {
+    font-size: var(--fs-tiny);
+    color: var(--text-3);
+  }
+
+  .str-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .str {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 20px;
+  }
+
+  .str-num {
+    font-family: var(--font-mono);
+    font-size: var(--fs-tiny);
+    color: var(--text-3);
+  }
+
+  .str-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .dom-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .dom {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 26px;
+  }
+
+  .dom-title {
+    font-size: 1.15rem;
+  }
+
+  .dom-desc {
+    font-size: 14px;
+    color: var(--text-2);
+    margin-bottom: 6px;
+  }
+
+  .dom-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 860px) {
+    .who-grid,
+    .str-grid,
+    .dom-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (min-width: 861px) and (max-width: 1024px) {
+    .str-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

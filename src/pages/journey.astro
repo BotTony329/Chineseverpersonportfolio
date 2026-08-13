@@ -1,0 +1,326 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import CTABand from '../components/CTABand.astro';
+
+const stages = [
+  {
+    id: '01',
+    title: 'Information Systems Education',
+    zh: '起点 · Information Systems 教育',
+    desc: '从信息系统教育出发，建立对「业务 × 技术」的系统理解。',
+    points: [
+      'Master of Information Systems，University of Melbourne',
+      'Bachelor of Commerce（Information Systems），Victoria University of Wellington',
+    ],
+    links: [{ label: '关于我', href: '/about' }],
+  },
+  {
+    id: '02',
+    title: 'Business / Digital / Product Experience',
+    zh: '实践 · 商业 / 数字 / 产品经验',
+    desc: '在产品与设计岗位中，把业务需求一步步做成上线的产品。',
+    points: [
+      '以 Digital Product Designer 身份参与真实产品项目',
+      '从 Production Team Briefing 到 UX / Product Design、开发协作、Testing 与上线',
+      '完成两个新的产品模块上线',
+    ],
+    links: [{ label: 'Product Discovery & Feature Delivery', href: '/projects/product-discovery-delivery' }],
+  },
+  {
+    id: '03',
+    title: 'Enterprise Projects',
+    zh: '纵深 · 企业项目',
+    desc: '进入企业级项目，参与完整 SaaS 生命周期与数字化转型方案设计。',
+    points: [
+      '参与大型企业物流数字化 SaaS 项目，从 Kickoff Meeting、原型、PRD 到测试与交付',
+      '完成 FMCG 新业务市场进入与数字化转型方案（TOGAF / ArchiMate / BPMN）',
+      '完成企业级 AI Copilot / Agent 战略项目（MART-GPT，2023）',
+    ],
+    links: [
+      { label: '企业物流 SaaS', href: '/projects/enterprise-logistics-saas' },
+      { label: 'FMCG 市场进入与数字化转型', href: '/projects/fmcg-digital-transformation' },
+      { label: 'MART-GPT', href: '/projects/mart-gpt-strategy' },
+    ],
+  },
+  {
+    id: '04',
+    title: 'AI & SaaS Exploration',
+    zh: '探索 · AI 与 SaaS',
+    desc: '把积累的方法用到自己的产品上：独立构建 AI SaaS，持续实验。',
+    points: [
+      '正在独立构建 AI 教师成长平台（AI SaaS）',
+      '持续实验 AI Agent、数据产品、自动化工具与电商等方向',
+    ],
+    links: [{ label: 'AI 教师成长平台', href: '/projects/ai-teacher-growth-platform' }],
+  },
+];
+
+const funded = ['电商项目', '网站', 'SaaS', 'AI API', '软件工具', '独立产品实验'];
+---
+
+<Base
+  title="经历"
+  description="Tony Zhao 的经历：Information Systems 教育 → 商业 / 数字 / 产品经验 → 企业项目 → AI 与 SaaS 探索。"
+  path="/journey"
+>
+  <section class="page-head">
+    <div class="container">
+      <p class="eyebrow reveal">Journey</p>
+      <h1 class="reveal" style="--rd:.06s">经历</h1>
+      <p class="lead page-intro reveal" style="--rd:.12s">
+        从 Information Systems 教育出发，走向 Business、Digital、Product，再到企业项目与 AI / SaaS 探索。
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <ol class="timeline">
+        {
+          stages.map((s, i) => (
+            <li class="tl-item reveal" style={`--rd:${i * 0.06}s`}>
+              <div class="tl-marker" aria-hidden="true">
+                <span class="tl-num">{s.id}</span>
+              </div>
+              <div class="tl-card card">
+                <div class="tl-head">
+                  <div>
+                    <p class="tl-en">{s.title}</p>
+                    <h2 class="tl-zh">{s.zh}</h2>
+                  </div>
+                </div>
+                <p class="tl-desc">{s.desc}</p>
+                <ul class="tl-points">
+                  {s.points.map((p) => (
+                    <li>{p}</li>
+                  ))}
+                </ul>
+                <div class="tl-links">
+                  {s.links.map((l) => (
+                    <a class="chip chip--accent" href={l.href}>
+                      {l.label} <span aria-hidden="true">→</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Supporting Thread：兼职与自费构建（不是职业起点） -->
+  <section class="section">
+    <div class="container">
+      <SectionTitle
+        index="·"
+        label="Supporting Thread · Self-funded building"
+        title="用自己的时间和资源验证想法"
+        desc="仓储与叉车兼职是我在学习和构建个人项目期间的工作，用于承担生活与实验成本——它是贯穿这段经历的一条 Supporting Thread，而不是职业起点。"
+      />
+      <div class="sf card reveal">
+        <p class="sf-quote">
+          「在学习和建立个人项目的过程中，我也长期通过兼职仓储和叉车工作承担自己的生活与实验成本。」
+        </p>
+        <div class="sf-body">
+          <p class="sf-text">
+            这些收入的一部分，支持了下面这些项目与实验。这是一条 <strong>Supporting Thread</strong>——我用工作之外的时间和自己的资源持续验证想法（<strong>Self-funded building</strong>）。
+          </p>
+          <div class="sf-chips">
+            {funded.map((f) => (
+              <span class="chip">{f}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <CTABand
+      title="想了解更完整的故事？"
+      desc="欢迎直接联系我，或看看我的项目与能力。"
+      primary={{ label: '联系我', href: '/contact' }}
+      secondary={{ label: '查看项目', href: '/projects' }}
+    />
+  </div>
+</Base>
+
+<script>
+  import { initReveal } from '../scripts/reveal';
+  initReveal();
+</script>
+
+<style>
+  .page-head {
+    padding-block: clamp(48px, 8vh, 88px) var(--sp-5);
+  }
+
+  .page-intro {
+    max-width: 640px;
+    margin-top: 18px;
+  }
+
+  .timeline {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    max-width: 860px;
+  }
+
+  .tl-item {
+    position: relative;
+    display: flex;
+    gap: 24px;
+    padding-bottom: 32px;
+  }
+
+  .tl-item:last-child {
+    padding-bottom: 0;
+  }
+
+  /* 时间线连接线 */
+  .tl-item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 21px;
+    top: 48px;
+    bottom: -4px;
+    width: 1px;
+    background: linear-gradient(180deg, rgba(59, 130, 246, 0.45), rgba(255, 255, 255, 0.06));
+  }
+
+  .tl-marker {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--accent-line);
+    background: var(--surface);
+  }
+
+  .tl-num {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+
+  .tl-card {
+    flex: 1;
+    padding: 24px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .tl-en {
+    font-size: var(--fs-tiny);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .tl-zh {
+    font-size: 1.2rem;
+    margin-top: 4px;
+  }
+
+  .tl-desc {
+    font-size: 15px;
+    color: var(--text-2);
+  }
+
+  .tl-points {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .tl-points li {
+    position: relative;
+    padding-left: 16px;
+    font-size: 14px;
+    color: var(--text-2);
+  }
+
+  .tl-points li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.7;
+  }
+
+  .tl-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .sf {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    overflow: hidden;
+  }
+
+  .sf-quote {
+    display: flex;
+    align-items: center;
+    padding: 36px 32px;
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--text);
+    background: linear-gradient(160deg, var(--accent-soft), transparent 70%), var(--surface-2);
+    border-right: 1px solid var(--border);
+  }
+
+  .sf-body {
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    justify-content: center;
+  }
+
+  .sf-text {
+    font-size: 15px;
+    color: var(--text-2);
+  }
+
+  .sf-text strong {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .sf-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  @media (max-width: 860px) {
+    .sf {
+      grid-template-columns: 1fr;
+    }
+
+    .sf-quote {
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+    }
+  }
+</style>

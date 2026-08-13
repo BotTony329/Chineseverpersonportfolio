@@ -1,0 +1,54 @@
+---
+interface Props {
+  items: { id: string; label: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="fw">
+  {
+    items.map((f, i) => (
+      <div class="fw-card card reveal" style={`--rd:${i * 0.07}s`}>
+        <span class="fw-letter" aria-hidden="true">{f.id}</span>
+        <span class="fw-label">{f.label}</span>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .fw {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .fw-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 26px 16px;
+    text-align: center;
+  }
+
+  .fw-letter {
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .fw-label {
+    font-size: var(--fs-small);
+    color: var(--text-2);
+  }
+
+  @media (max-width: 640px) {
+    .fw {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,217 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../data/site';
+import { projects, type Project } from '../../data/projects';
+import { getPrevNext, getRelated } from '../../lib/projects';
+import CaseStudyHeader from '../../components/CaseStudyHeader.astro';
+import HighlightGrid from '../../components/HighlightGrid.astro';
+import ProcessFlow from '../../components/ProcessFlow.astro';
+import OutcomeList from '../../components/OutcomeList.astro';
+import ContributionSplit from '../../components/ContributionSplit.astro';
+import FrameworkGrid from '../../components/FrameworkGrid.astro';
+import Callout from '../../components/Callout.astro';
+import PrevNext from '../../components/PrevNext.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const { prev, next } = getPrevNext(project.slug);
+const related = getRelated(project, 3);
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: project.titleEn ? `${project.title}（${project.titleEn}）` : project.title,
+    description: project.summary,
+    url: new URL(`/projects/${project.slug}`, site.url).href,
+    inLanguage: 'zh-CN',
+    author: { '@type': 'Person', name: site.name, url: site.url },
+    ...(project.year ? { dateCreated: project.year } : {}),
+    ...(project.skills ? { keywords: project.skills.join(', ') } : {}),
+  },
+];
+---
+
+<Base
+  title={project.title}
+  description={project.summary}
+  path={`/projects/${project.slug}`}
+  ogType="article"
+  jsonLd={jsonLd}
+>
+  <article class="cs">
+    <div class="container">
+      <CaseStudyHeader project={project} />
+
+      <div class="cs-body">
+        {
+          project.content.intro && (
+            <section class="cs-section">
+              <h2 class="cs-h2">项目背景</h2>
+              {project.content.intro.map((p) => (
+                <p class="lead">{p}</p>
+              ))}
+            </section>
+          )
+        }
+
+        {
+          project.content.highlights && (
+            <section class="cs-section">
+              <h2 class="cs-h2">我的工作</h2>
+              <HighlightGrid items={project.content.highlights} />
+            </section>
+          )
+        }
+
+        {
+          project.content.framework && (
+            <section class="cs-section">
+              <h2 class="cs-h2">MART Framework</h2>
+              <FrameworkGrid items={project.content.framework} />
+            </section>
+          )
+        }
+
+        {
+          project.content.process && (
+            <section class="cs-section">
+              <h2 class="cs-h2">关键流程</h2>
+              <ProcessFlow steps={project.content.process} />
+            </section>
+          )
+        }
+
+        {
+          project.content.outcomes && (
+            <section class="cs-section">
+              <h2 class="cs-h2">产出与价值</h2>
+              <OutcomeList items={project.content.outcomes} />
+            </section>
+          )
+        }
+
+        {
+          project.content.contribution && (
+            <section class="cs-section">
+              <h2 class="cs-h2">个人与团队贡献</h2>
+              <ContributionSplit mine={project.content.contribution.mine} team={project.content.contribution.team} />
+            </section>
+          )
+        }
+
+        {
+          project.skills && (
+            <section class="cs-section">
+              <h2 class="cs-h2">相关技能</h2>
+              <div class="cs-skills">
+                {project.skills.map((s) => (
+                  <span class="chip">{s}</span>
+                ))}
+              </div>
+            </section>
+          )
+        }
+
+        {project.content.note && (
+          <div class="cs-note">
+            <Callout title="说明" text={project.content.note} />
+          </div>
+        )}
+      </div>
+
+      <PrevNext prev={prev} next={next} />
+
+      {
+        related.length > 0 && (
+          <section class="section">
+            <SectionTitle index="RELATED" title="继续了解" desc="与这个项目相关的其他案例。" />
+            <div class="grid-3">
+              {
+                related.map((p, i) => (
+                  <div class="reveal" style={`--rd:${i * 0.07}s`}>
+                    <ProjectCard project={p} />
+                  </div>
+                ))
+              }
+            </div>
+          </section>
+        )
+      }
+    </div>
+  </article>
+</Base>
+
+<script>
+  import { initReveal } from '../../scripts/reveal';
+  initReveal();
+</script>
+
+<style>
+  .cs {
+    padding-block: clamp(40px, 6vh, 64px) var(--sp-6);
+  }
+
+  .cs-body {
+    max-width: 760px;
+    margin-top: var(--sp-6);
+  }
+
+  .cs-section {
+    margin-bottom: var(--sp-6);
+  }
+
+  .cs-h2 {
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .cs-h2::before {
+    content: '';
+    width: 4px;
+    height: 18px;
+    border-radius: 2px;
+    background: var(--accent);
+  }
+
+  .cs-section .lead {
+    margin-bottom: 14px;
+  }
+
+  .cs-section .lead:last-child {
+    margin-bottom: 0;
+  }
+
+  .cs-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .cs-note {
+    margin-top: var(--sp-5);
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+</style>

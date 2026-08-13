@@ -1,0 +1,100 @@
+---
+interface Props {
+  mine: string[];
+  team?: string[];
+}
+
+const { mine, team } = Astro.props;
+---
+
+<div class:list={['csplit', { 'csplit--split': team && team.length > 0 }]}>
+  <div class="cpanel cpanel--mine">
+    <h3 class="cpanel-title">我的贡献</h3>
+    <ul class="cpanel-list">
+      {mine.map((item) => (
+        <li>{item}</li>
+      ))}
+    </ul>
+  </div>
+  {team && team.length > 0 && (
+    <div class="cpanel cpanel--team">
+      <h3 class="cpanel-title">组员负责</h3>
+      <ul class="cpanel-list">
+        {team.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </div>
+  )}
+</div>
+
+<style>
+  .csplit {
+    display: grid;
+    gap: 16px;
+  }
+
+  .csplit--split {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cpanel {
+    padding: 22px;
+    border-radius: var(--radius-m);
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .cpanel--mine {
+    border-color: var(--accent-line);
+    background: linear-gradient(160deg, var(--accent-soft), transparent 60%), var(--surface);
+  }
+
+  .cpanel-title {
+    font-size: var(--fs-small);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .cpanel--team .cpanel-title {
+    color: var(--text-3);
+  }
+
+  .cpanel-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .cpanel-list li {
+    position: relative;
+    padding-left: 16px;
+    font-size: 14px;
+    color: var(--text-2);
+  }
+
+  .cpanel-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.8;
+  }
+
+  .cpanel--team .cpanel-list li::before {
+    background: var(--text-3);
+  }
+
+  @media (max-width: 640px) {
+    .csplit--split {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

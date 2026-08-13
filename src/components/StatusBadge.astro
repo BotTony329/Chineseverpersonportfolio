@@ -1,0 +1,11 @@
+---
+import { statusLabels, statusTone, type ProjectStatus } from '../data/projects';
+
+interface Props {
+  status: ProjectStatus;
+}
+const { status } = Astro.props;
+const tone = statusTone[status];
+---
+
+<span class={`badge badge--${tone}`}>{statusLabels[status]}</span>

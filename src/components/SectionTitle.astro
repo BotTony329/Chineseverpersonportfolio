@@ -1,0 +1,27 @@
+---
+interface Props {
+  index: string;
+  title: string;
+  label?: string;
+  desc?: string;
+  row?: boolean;
+  link?: { label: string; href: string };
+}
+const { index, title, label, desc, row = false, link } = Astro.props;
+---
+
+<div class:list={['section-head', { 'section-head--row': row }]}>
+  <div class="section-head__top">
+    <p class="eyebrow">
+      <span class="sec-index">{index}</span>
+      {label && <span class="sec-label">{label}</span>}
+    </p>
+    {link && (
+      <a class="section-head__link" href={link.href}>
+        {link.label} <span aria-hidden="true">→</span>
+      </a>
+    )}
+  </div>
+  <h2>{title}</h2>
+  {desc && <p class="lead">{desc}</p>}
+</div>

@@ -1,0 +1,27 @@
+---
+/** 奶牛猫极简几何标志（黑白奶牛纹 + 蓝色眼睛，克制的个人视觉元素） */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg class={className} viewBox="0 0 64 64" role="img" aria-label="奶牛猫标志" focusable="false">
+  <rect width="64" height="64" rx="15" fill="#12161c" stroke="rgba(255,255,255,0.08)" />
+  <!-- 左耳（黑色） -->
+  <path d="M19.5 9.5 28.5 20 10.5 23.5Z" fill="#0b0f14" />
+  <!-- 右耳（白色） -->
+  <path d="M44.5 9.5 35.5 20 53.5 23.5Z" fill="#e8ecf1" />
+  <!-- 头部 -->
+  <circle cx="32" cy="33.5" r="16.5" fill="#e8ecf1" />
+  <!-- 左眼奶牛斑（黑色） -->
+  <circle cx="25.5" cy="24.5" r="8" fill="#0b0f14" />
+  <!-- 左眼（斑内白点） -->
+  <circle cx="26" cy="25" r="1.7" fill="#e8ecf1" />
+  <!-- 右眼（科技蓝） -->
+  <circle cx="38.5" cy="26.5" r="1.9" fill="#3b82f6" />
+  <!-- 鼻子 -->
+  <path d="M30.8 34.5 33.2 34.5 32 37.4Z" fill="#3b82f6" />
+  <!-- 右颊小斑 -->
+  <circle cx="41" cy="37.5" r="4.2" fill="#0b0f14" opacity="0.85" />
+</svg>

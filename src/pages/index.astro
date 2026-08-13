@@ -1,0 +1,235 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+import { projects } from '../data/projects';
+import { getFeatured } from '../lib/projects';
+import FlowStrip from '../components/FlowStrip.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import FeaturedProjectCard from '../components/FeaturedProjectCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import CapabilityChips from '../components/CapabilityChips.astro';
+import WorkingMethod from '../components/WorkingMethod.astro';
+import SideProjectsWall from '../components/SideProjectsWall.astro';
+import CTABand from '../components/CTABand.astro';
+
+const featured = getFeatured();
+const more = projects.filter((p) =>
+  ['fmcg-digital-transformation', 'product-discovery-delivery'].includes(p.slug)
+);
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: `${site.name} 中文 Portfolio`,
+    url: site.url,
+    description: site.description,
+    inLanguage: 'zh-CN',
+  },
+];
+---
+
+<Base title={site.name} description={site.description} path="/" jsonLd={jsonLd}>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <p class="eyebrow reveal">{site.tagline}</p>
+      <h1 class="hero-title reveal" style="--rd:.06s">{site.heroTitle}</h1>
+      <p class="lead hero-intro reveal" style="--rd:.12s">{site.heroIntro}</p>
+      <div class="hero-flow reveal" style="--rd:.18s">
+        <FlowStrip steps={[...site.workflow]} />
+      </div>
+      <div class="hero-cta reveal" style="--rd:.24s">
+        <a class="btn btn-primary" href="/projects">查看项目</a>
+        <a class="btn btn-ghost" href="/about">了解我</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 能力域 -->
+  <section class="caps-strip">
+    <div class="container">
+      <div class="caps-line reveal">
+        <span class="caps-label">能力域</span>
+        <CapabilityChips />
+      </div>
+    </div>
+  </section>
+
+  <!-- 重点项目 -->
+  <section class="section">
+    <div class="container">
+      <SectionTitle
+        index="01"
+        label="重点项目"
+        title="从业务问题，到真正落地的产品"
+        desc="三个重点项目：一个完整的企业 SaaS 生命周期、一个正在独立构建的 AI SaaS 产品，以及 2023 年的企业级 AI Copilot / Agent 战略项目。"
+        link={{ label: '查看全部项目', href: '/projects' }}
+      />
+      <div class="featured-grid">
+        {
+          featured.map((p, i) => (
+            <div class:list={['reveal', { 'featured-wide': i === 2 }]} style={i > 0 ? `--rd:${i * 0.08}s` : undefined}>
+              <FeaturedProjectCard project={p} index={`PROJECT ${String(i + 1).padStart(2, '0')}`} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- 其他方向 -->
+  <section class="section">
+    <div class="container">
+      <SectionTitle
+        index="02"
+        label="其他方向"
+        title="企业数字化转型 · 产品上线"
+        desc="除了三个重点项目，我在企业数字化转型方案与产品模块交付上也有完整实践。"
+      />
+      <div class="grid-3">
+        {
+          more.map((p, i) => (
+            <div class="reveal" style={`--rd:${i * 0.08}s`}>
+              <ProjectCard project={p} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- 工作方式 -->
+  <section class="section">
+    <div class="container">
+      <SectionTitle
+        index="03"
+        label="工作方式"
+        title="从理解业务，到推动交付"
+        desc="Understand → Structure → Design → Build → Validate → Deliver。我不仅是写分析报告的人。"
+      />
+      <div class="reveal">
+        <WorkingMethod />
+      </div>
+    </div>
+  </section>
+
+  <!-- 独立实践 -->
+  <section class="section">
+    <div class="container">
+      <SectionTitle
+        index="04"
+        label="独立实践"
+        title="Side Projects"
+        desc="工作之外，我持续用真实产品验证想法。"
+      />
+      <div class="reveal">
+        <SideProjectsWall />
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <CTABand
+      title="有业务问题需要落地？"
+      desc="无论是企业数字化项目、BA / 产品合作，还是 AI 产品想法，欢迎联系我。"
+      primary={{ label: '联系我', href: '/contact' }}
+      secondary={{ label: '查看全部项目', href: '/projects' }}
+    />
+  </div>
+</Base>
+
+<script>
+  import { initReveal } from '../scripts/reveal';
+  initReveal();
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    padding: clamp(64px, 10vh, 120px) 0 64px;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+    background-size: 30px 30px;
+    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 78%);
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 78%);
+    pointer-events: none;
+  }
+
+  .hero .container {
+    position: relative;
+  }
+
+  .hero-title {
+    max-width: 780px;
+    margin-top: 22px;
+  }
+
+  .hero-intro {
+    max-width: 640px;
+    margin-top: 22px;
+  }
+
+  .hero-flow {
+    max-width: 780px;
+    margin-top: 48px;
+  }
+
+  .hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 44px;
+  }
+
+  .caps-strip {
+    padding-block: 8px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: rgba(18, 22, 28, 0.5);
+  }
+
+  .caps-line {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding-block: 20px;
+  }
+
+  .caps-label {
+    font-size: var(--fs-tiny);
+    letter-spacing: 0.14em;
+    color: var(--text-3);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .featured-wide {
+    grid-column: 1 / -1;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  @media (max-width: 1024px) {
+    .featured-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

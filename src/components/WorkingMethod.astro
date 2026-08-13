@@ -1,0 +1,71 @@
+---
+/** 工作方式：Understand → Structure → Design → Build → Validate → Deliver */
+import { workingMethod } from '../data/skills';
+---
+
+<ol class="method">
+  {
+    workingMethod.map((m, i) => (
+      <li class="method-item">
+        <span class="method-num">{String(i + 1).padStart(2, '0')}</span>
+        <span class="method-en">{m.en}</span>
+        <span class="method-zh">{m.zh}</span>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .method {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .method-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-m);
+    background: var(--surface);
+    transition: border-color var(--dur) ease, transform var(--dur) var(--ease);
+  }
+
+  .method-item:hover {
+    border-color: var(--accent-line);
+    transform: translateY(-2px);
+  }
+
+  .method-num {
+    font-family: var(--font-mono);
+    font-size: var(--fs-tiny);
+    color: var(--text-3);
+    letter-spacing: 0.1em;
+  }
+
+  .method-en {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .method-zh {
+    font-size: var(--fs-tiny);
+    color: var(--text-2);
+  }
+
+  @media (max-width: 900px) {
+    .method {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 400px) {
+    .method {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

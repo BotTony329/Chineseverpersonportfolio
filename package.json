@@ -1,0 +1,17 @@
+{
+  "name": "portfolio-cn",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tony Zhao 中文个人 Portfolio — Business Analyst · Digital Transformation · AI Product",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "assets": "node scripts/generate-assets.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "astro": "^5.7.0"
+  }
+}

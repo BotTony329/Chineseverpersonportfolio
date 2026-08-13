@@ -1,0 +1,131 @@
+---
+/** 抽象项目封面：纯 SVG/CSS 生成，零图片请求。 */
+type Variant = 'flow' | 'grid' | 'orbit' | 'nodes';
+
+interface Props {
+  variant: Variant;
+}
+
+const { variant } = Astro.props;
+const gridDots = Array.from({ length: 10 * 6 }, (_, i) => ({
+  x: 20 + (i % 10) * 40,
+  y: 25 + Math.floor(i / 10) * 40,
+  hot: (i % 10 + Math.floor(i / 10)) % 7 === 0,
+}));
+const nodes = [
+  { x: 60, y: 70 }, { x: 165, y: 45 }, { x: 295, y: 62 },
+  { x: 335, y: 130 }, { x: 240, y: 185 }, { x: 90, y: 165 },
+];
+const nodeLinks = [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 0], [1, 5]];
+---
+
+<div class={`cover cover--${variant}`} aria-hidden="true">
+  {
+    variant === 'flow' && (
+      <svg viewBox="0 0 400 250" fill="none">
+        <path d="M28 125H372" stroke="rgba(255,255,255,.1)" stroke-width="2" stroke-dasharray="2 7" />
+        {[28, 114, 200, 286, 372].map((x, i) => (
+          <circle cx={x} cy="125" r={i === 2 ? 6 : 4.5} fill={i === 2 ? 'var(--accent)' : 'var(--surface-3)'} stroke="rgba(255,255,255,.16)" />
+        ))}
+        <circle cx="200" cy="125" r="13" stroke="var(--accent)" stroke-width="1.5" opacity=".55" class="cover-pulse" />
+        <path d="M28 190H372" stroke="rgba(255,255,255,.05)" />
+        <circle cx="70" cy="190" r="3" fill="rgba(255,255,255,.12)" />
+        <circle cx="150" cy="190" r="3" fill="rgba(255,255,255,.12)" />
+        <circle cx="260" cy="190" r="3" fill="rgba(59,130,246,.4)" />
+        <circle cx="330" cy="190" r="3" fill="rgba(255,255,255,.12)" />
+        <circle cx="90" cy="60" r="2.5" fill="rgba(255,255,255,.1)" />
+        <circle cx="320" cy="55" r="2.5" fill="rgba(59,130,246,.35)" />
+      </svg>
+    )
+  }
+  {
+    variant === 'grid' && (
+      <svg viewBox="0 0 400 250" fill="none">
+        {gridDots.map((d, i) => (
+          <circle cx={d.x} cy={d.y} r={d.hot ? 2.6 : 1.8} fill={d.hot ? 'rgba(59,130,246,.55)' : 'rgba(255,255,255,.13)'} />
+        ))}
+        <rect x="120" y="85" width="160" height="80" rx="10" stroke="rgba(59,130,246,.5)" stroke-width="1.5" class="cover-pulse-soft" />
+        <path d="M140 125h120" stroke="rgba(255,255,255,.1)" stroke-dasharray="3 5" />
+      </svg>
+    )
+  }
+  {
+    variant === 'orbit' && (
+      <svg viewBox="0 0 400 250" fill="none">
+        <circle cx="200" cy="125" r="30" stroke="rgba(255,255,255,.12)" />
+        <circle cx="200" cy="125" r="62" stroke="rgba(255,255,255,.08)" stroke-dasharray="3 6" />
+        <circle cx="200" cy="125" r="94" stroke="rgba(59,130,246,.28)" stroke-dasharray="2 8" />
+        <circle cx="200" cy="125" r="6" fill="var(--accent)" />
+        <circle cx="200" cy="31" r="5" fill="var(--surface-3)" stroke="rgba(255,255,255,.25)" />
+        <circle cx="294" cy="125" r="4" fill="rgba(59,130,246,.6)" class="cover-pulse" />
+        <circle cx="200" cy="219" r="3.5" fill="rgba(255,255,255,.18)" />
+        <path d="M200 125 294 125" stroke="rgba(59,130,246,.35)" stroke-dasharray="2 5" />
+      </svg>
+    )
+  }
+  {
+    variant === 'nodes' && (
+      <svg viewBox="0 0 400 250" fill="none">
+        {nodeLinks.map(([a, b]) => (
+          <path d={`M${nodes[a].x} ${nodes[a].y}L${nodes[b].x} ${nodes[b].y}`} stroke="rgba(255,255,255,.1)" stroke-width="1.4" />
+        ))}
+        {nodes.map((n, i) => (
+          <circle cx={n.x} cy={n.y} r={i === 3 ? 7 : 4.5} fill={i === 3 ? 'var(--accent)' : 'var(--surface-3)'} stroke={i === 3 ? 'none' : 'rgba(255,255,255,.2)'} />
+        ))}
+        <circle cx="335" cy="130" r="11" stroke="var(--accent)" stroke-width="1.5" opacity=".5" class="cover-pulse" />
+      </svg>
+    )
+  }
+</div>
+
+<style>
+  .cover {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-m);
+    overflow: hidden;
+    background:
+      radial-gradient(420px 220px at 78% 20%, rgba(59, 130, 246, 0.07), transparent 65%),
+      linear-gradient(160deg, var(--surface-2), var(--surface));
+    border: 1px solid var(--border);
+  }
+
+  .cover svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .cover-pulse {
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: cover-pulse 3s var(--ease) infinite;
+  }
+
+  .cover-pulse-soft {
+    animation: cover-pulse-soft 4.5s ease-in-out infinite;
+  }
+
+  @keyframes cover-pulse {
+    0%,
+    100% {
+      opacity: 0.55;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.15;
+      transform: scale(1.35);
+    }
+  }
+
+  @keyframes cover-pulse-soft {
+    0%,
+    100% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 0.15;
+    }
+  }
+</style>

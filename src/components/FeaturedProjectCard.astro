@@ -1,0 +1,152 @@
+---
+import { statusLabels, statusTone, type Project } from '../data/projects';
+import ProjectCover from './ProjectCover.astro';
+
+interface Props {
+  project: Project;
+  index: string;
+}
+
+const { project, index } = Astro.props;
+---
+
+<article class="fcard card card--hover">
+  <a class="fcard-link" href={`/projects/${project.slug}`} aria-label={`查看案例：${project.title}`}>
+    <div class="fcard-cover">
+      <ProjectCover variant={project.cover} />
+      <span class="fcard-index" aria-hidden="true">{index}</span>
+      {project.status && (
+        <span class="fcard-status">
+          <span class={`badge badge--${statusTone[project.status]}`}>{statusLabels[project.status]}</span>
+        </span>
+      )}
+    </div>
+
+    <div class="fcard-body">
+      <p class="fcard-role">{project.role}</p>
+      <h3 class="fcard-title">
+        {project.title}
+        {project.titleEn && <span class="fcard-en">{project.titleEn}</span>}
+      </h3>
+      <p class="fcard-summary">{project.summary}</p>
+      <div class="fcard-tags">
+        {project.tags.slice(0, 4).map((t) => (
+          <span class="chip">{t}</span>
+        ))}
+      </div>
+      <span class="fcard-more">
+        查看案例 <span class="arrow" aria-hidden="true">→</span>
+      </span>
+    </div>
+  </a>
+</article>
+
+<style>
+  .fcard-link {
+    display: grid;
+    grid-template-columns: 44% 1fr;
+    gap: 0;
+    color: inherit;
+    height: 100%;
+  }
+
+  .fcard-link:hover {
+    color: inherit;
+  }
+
+  .fcard-cover {
+    position: relative;
+    padding: 24px 0 24px 24px;
+  }
+
+  .fcard-cover :global(.cover) {
+    height: 100%;
+  }
+
+  .fcard-index {
+    position: absolute;
+    top: 34px;
+    left: 40px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: rgba(232, 236, 241, 0.85);
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  .fcard-status {
+    position: absolute;
+    top: 32px;
+    right: 16px;
+  }
+
+  .fcard-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 32px 32px 28px;
+  }
+
+  .fcard-role {
+    font-size: var(--fs-tiny);
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  .fcard-title {
+    font-size: clamp(1.35rem, 1.1rem + 1vw, 1.7rem);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .fcard-en {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-3);
+    letter-spacing: 0.02em;
+  }
+
+  .fcard-summary {
+    font-size: 15px;
+    color: var(--text-2);
+  }
+
+  .fcard-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .fcard-more {
+    margin-top: auto;
+    padding-top: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .fcard-more .arrow {
+    transition: transform var(--dur) var(--ease);
+  }
+
+  .fcard:hover .fcard-more .arrow {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 860px) {
+    .fcard-link {
+      grid-template-columns: 1fr;
+    }
+
+    .fcard-cover {
+      padding: 20px 20px 0;
+    }
+  }
+</style>
